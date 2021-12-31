@@ -500,7 +500,7 @@
 /* #undef HAVE_GETRANDOM */
 
 /* Define to 1 if the Linux getrandom() syscall is available */
-#define HAVE_GETRANDOM_SYSCALL 1
+/* #undef HAVE_GETRANDOM_SYSCALL */
 
 /* Define to 1 if you have the `getresgid' function. */
 #define HAVE_GETRESGID 1
@@ -614,6 +614,9 @@
 /* Define to 1 if you have the <libutil.h> header file. */
 /* #undef HAVE_LIBUTIL_H */
 
+/* Define you have libuuid. */
+#define HAVE_LIBUUID 1
+
 /* Define if you have the 'link' function. */
 #define HAVE_LINK 1
 
@@ -621,7 +624,7 @@
 #define HAVE_LINKAT 1
 
 /* Define to 1 if you have the <linux/can/bcm.h> header file. */
-#define HAVE_LINUX_CAN_BCM_H 1
+/* #undef HAVE_LINUX_CAN_BCM_H */
 
 /* Define to 1 if you have the <linux/can.h> header file. */
 #define HAVE_LINUX_CAN_H 1
@@ -630,16 +633,16 @@
 /* #undef HAVE_LINUX_CAN_J1939_H */
 
 /* Define if compiling using Linux 3.6 or later. */
-#define HAVE_LINUX_CAN_RAW_FD_FRAMES 1
+/* #undef HAVE_LINUX_CAN_RAW_FD_FRAMES */
 
 /* Define to 1 if you have the <linux/can/raw.h> header file. */
 #define HAVE_LINUX_CAN_RAW_H 1
 
 /* Define if compiling using Linux 4.1 or later. */
-#define HAVE_LINUX_CAN_RAW_JOIN_FILTERS 1
+/* #undef HAVE_LINUX_CAN_RAW_JOIN_FILTERS */
 
 /* Define to 1 if you have the <linux/memfd.h> header file. */
-#define HAVE_LINUX_MEMFD_H 1
+/* #undef HAVE_LINUX_MEMFD_H */
 
 /* Define to 1 if you have the <linux/netlink.h> header file. */
 #define HAVE_LINUX_NETLINK_H 1
@@ -654,7 +657,7 @@
 #define HAVE_LINUX_TIPC_H 1
 
 /* Define to 1 if you have the <linux/vm_sockets.h> header file. */
-#define HAVE_LINUX_VM_SOCKETS_H 1
+/* #undef HAVE_LINUX_VM_SOCKETS_H */
 
 /* Define to 1 if you have the <linux/wait.h> header file. */
 #define HAVE_LINUX_WAIT_H 1
@@ -784,7 +787,7 @@
 /* #undef HAVE_PREADV2 */
 
 /* Define if you have the 'prlimit' functions. */
-#define HAVE_PRLIMIT 1
+/* #undef HAVE_PRLIMIT */
 
 /* Define to 1 if you have the <process.h> header file. */
 /* #undef HAVE_PROCESS_H */
@@ -887,6 +890,9 @@
 
 /* Define to 1 if you have the `sched_setscheduler' function. */
 #define HAVE_SCHED_SETSCHEDULER 1
+
+/* Define to 1 if you have the `sem_clockwait' function. */
+/* #undef HAVE_SEM_CLOCKWAIT */
 
 /* Define to 1 if you have the `sem_getvalue' function. */
 #define HAVE_SEM_GETVALUE 1
@@ -1000,7 +1006,7 @@
 #define HAVE_SNPRINTF 1
 
 /* struct sockaddr_alg (linux/if_alg.h) */
-#define HAVE_SOCKADDR_ALG 1
+/* #undef HAVE_SOCKADDR_ALG */
 
 /* Define if sockaddr has sa_len member */
 /* #undef HAVE_SOCKADDR_SA_LEN */
@@ -1301,7 +1307,7 @@
 #define HAVE_UUID_GENERATE_TIME_SAFE 1
 
 /* Define to 1 if you have the <uuid.h> header file. */
-/* #undef HAVE_UUID_H */
+#define HAVE_UUID_H 1
 
 /* Define to 1 if you have the <uuid/uuid.h> header file. */
 #define HAVE_UUID_UUID_H 1
@@ -1426,7 +1432,7 @@
 /* #undef SETPGRP_HAVE_ARG */
 
 /* Define to 1 if you must link with -lrt for shm_open(). */
-#define SHM_NEEDS_LIBRT 1
+/* #undef SHM_NEEDS_LIBRT */
 
 /* Define if i>>j for signed int i does not extend the sign bit when i < 0 */
 /* #undef SIGNED_RIGHT_SHIFT_ZERO_FILLS */
@@ -1493,7 +1499,7 @@
 #define SYS_SELECT_WITH_SYS_TIME 1
 
 /* Library needed by timemodule.c: librt may be needed for clock_gettime() */
-/* #undef TIMEMODULE_LIB */
+#define TIMEMODULE_LIB rt
 
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #define TIME_WITH_SYS_TIME 1

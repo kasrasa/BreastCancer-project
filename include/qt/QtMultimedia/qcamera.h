@@ -165,10 +165,10 @@ public:
         FrontFace
     };
 
-    explicit QCamera(QObject *parent = Q_NULLPTR);
-    explicit QCamera(const QByteArray& deviceName, QObject *parent = Q_NULLPTR);
-    explicit QCamera(const QCameraInfo& cameraInfo, QObject *parent = Q_NULLPTR);
-    explicit QCamera(QCamera::Position position, QObject *parent = Q_NULLPTR);
+    explicit QCamera(QObject *parent = nullptr);
+    explicit QCamera(const QByteArray& deviceName, QObject *parent = nullptr);
+    explicit QCamera(const QCameraInfo& cameraInfo, QObject *parent = nullptr);
+    explicit QCamera(QCamera::Position position, QObject *parent = nullptr);
     ~QCamera();
 
 #if QT_DEPRECATED_SINCE(5, 3)
@@ -232,15 +232,15 @@ public Q_SLOTS:
     void unlock(QCamera::LockTypes locks);
 
 Q_SIGNALS:
-    void stateChanged(QCamera::State);
+    void stateChanged(QCamera::State state);
     void captureModeChanged(QCamera::CaptureModes);
-    void statusChanged(QCamera::Status);
+    void statusChanged(QCamera::Status status);
 
     void locked();
     void lockFailed();
 
-    void lockStatusChanged(QCamera::LockStatus, QCamera::LockChangeReason);
-    void lockStatusChanged(QCamera::LockType, QCamera::LockStatus, QCamera::LockChangeReason);
+    void lockStatusChanged(QCamera::LockStatus status, QCamera::LockChangeReason reason);
+    void lockStatusChanged(QCamera::LockType lock, QCamera::LockStatus status, QCamera::LockChangeReason reason);
 
     void error(QCamera::Error);
 
@@ -262,7 +262,10 @@ QT_WARNING_DISABLE_CLANG("-Wfloat-equal")
 QT_WARNING_DISABLE_GCC("-Wfloat-equal")
 
 Q_DECL_CONSTEXPR Q_INLINE_TEMPLATE bool operator==(const QCamera::FrameRateRange &r1, const QCamera::FrameRateRange &r2) Q_DECL_NOTHROW
-{ return r1.minimumFrameRate == r2.minimumFrameRate && r1.maximumFrameRate == r2.maximumFrameRate; }
+{
+    return qFuzzyCompare(r1.minimumFrameRate, r2.minimumFrameRate)
+        && qFuzzyCompare(r1.maximumFrameRate, r2.maximumFrameRate);
+}
 
 QT_WARNING_POP
 

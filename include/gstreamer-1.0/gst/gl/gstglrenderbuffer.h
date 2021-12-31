@@ -46,9 +46,8 @@ GST_GL_API GType gst_gl_renderbuffer_allocator_get_type(void);
 
 /**
  * GstGLRenderbuffer:
- * @mem: the parent object
  * @renderbuffer_id: the GL texture id for this memory
- * @renderbuffer_type: the texture type
+ * @renderbuffer_format: the texture type
  * @width: the width
  * @height: the height
  *
@@ -56,22 +55,24 @@ GST_GL_API GType gst_gl_renderbuffer_allocator_get_type(void);
  */
 struct _GstGLRenderbuffer
 {
+  /*< private >*/
   GstGLBaseMemory           mem;
 
+  /*< public >*/
   guint                     renderbuffer_id;
   GstGLFormat               renderbuffer_format;
   guint                     width;
   guint                     height;
 
-  /* <protected> */
+  /*< protected >*/
   gboolean                  renderbuffer_wrapped;
 
-  /* <private> */
+  /*< private >*/
   gpointer                  _padding[GST_PADDING];
 };
 
 /**
- * GstGLRenderbufferAllocator
+ * GstGLRenderbufferAllocator:
  *
  * Opaque #GstGLRenderbufferAllocator struct
  */
@@ -79,7 +80,7 @@ struct _GstGLRenderbufferAllocator
 {
   GstGLBaseMemoryAllocator parent;
 
-  /* <private> */
+  /*< private >*/
   gpointer                  _padding[GST_PADDING];
 };
 
@@ -92,26 +93,38 @@ struct _GstGLRenderbufferAllocatorClass
 {
   GstGLBaseMemoryAllocatorClass             parent_class;
 
-  /* <private> */
+  /*< private >*/
   gpointer                  _padding[GST_PADDING];
 };
 
 #include <gst/gl/gstglbasememory.h>
 
+typedef struct _GstGLRenderbufferAllocationParams GstGLRenderbufferAllocationParams;
+
 GST_GL_API GType gst_gl_renderbuffer_allocation_params_get_type (void);
 #define GST_TYPE_RENDERBUFFER_ALLOCATION_PARAMS (gst_gl_renderbuffer_allocation_params_get_type)
 
-typedef struct
+/**
+ * GstGLRenderbufferAllocationParams:
+ * @renderbuffer_format: the #GstGLFormat
+ * @width: the width
+ * @height: the height
+ *
+ * Allocation parameters
+ */
+struct _GstGLRenderbufferAllocationParams
 {
+  /*< private >*/
   GstGLAllocationParams parent;
 
+  /*< public >*/
   GstGLFormat renderbuffer_format;
   guint width;
   guint height;
 
-  /* <private> */
+  /*< private >*/
   gpointer _padding[GST_PADDING];
-} GstGLRenderbufferAllocationParams;
+};
 
 GST_GL_API
 GstGLRenderbufferAllocationParams *     gst_gl_renderbuffer_allocation_params_new           (GstGLContext * context,

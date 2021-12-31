@@ -86,7 +86,7 @@ while test $# -gt 0; do
             shift
             libs="-lxml2"
         else
-            libs="-lxml2 -L/home/kasra/anaconda3/envs/BreastCancer/lib -lz -L/home/kasra/anaconda3/envs/BreastCancer/lib -llzma -lpthread -L/home/kasra/anaconda3/envs/BreastCancer/lib -L/home/kasra/anaconda3/envs/BreastCancer/lib -licui18n -licuuc -licudata -lm  -ldl"
+            libs="-lxml2 -L/home/kasra/anaconda3/envs/BreastCancer/lib -lz -L/home/kasra/anaconda3/envs/BreastCancer/lib -llzma -lpthread -L/home/kasra/anaconda3/envs/BreastCancer/lib -liconv -L/home/kasra/anaconda3/envs/BreastCancer/lib -licui18n -licuuc -licudata -lm  -ldl"
         fi
 
         if [ "-L${libdir}" != "-L/usr/lib" -a "-L${libdir}" != "-L/usr/lib64" ]; then

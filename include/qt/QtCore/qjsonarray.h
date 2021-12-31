@@ -72,6 +72,20 @@ public:
     QJsonArray(const QJsonArray &other);
     QJsonArray &operator =(const QJsonArray &other);
 
+    QJsonArray(QJsonArray &&other) Q_DECL_NOTHROW
+        : d(other.d),
+          a(other.a)
+    {
+        other.d = nullptr;
+        other.a = nullptr;
+    }
+
+    QJsonArray &operator =(QJsonArray &&other) Q_DECL_NOTHROW
+    {
+        swap(other);
+        return *this;
+    }
+
     static QJsonArray fromStringList(const QStringList &list);
     static QJsonArray fromVariantList(const QVariantList &list);
     QVariantList toVariantList() const;
@@ -101,6 +115,12 @@ public:
     bool operator==(const QJsonArray &other) const;
     bool operator!=(const QJsonArray &other) const;
 
+    void swap(QJsonArray &other) Q_DECL_NOTHROW
+    {
+        qSwap(d, other.d);
+        qSwap(a, other.a);
+    }
+
     class const_iterator;
 
     class iterator {
@@ -113,7 +133,7 @@ public:
         typedef QJsonValueRef reference;
         typedef QJsonValueRefPtr pointer;
 
-        inline iterator() : a(Q_NULLPTR), i(0) { }
+        inline iterator() : a(nullptr), i(0) { }
         explicit inline iterator(QJsonArray *array, int index) : a(array), i(index) { }
 
         inline QJsonValueRef operator*() const { return QJsonValueRef(a, i); }
@@ -158,7 +178,7 @@ public:
         typedef QJsonValue reference;
         typedef QJsonValuePtr pointer;
 
-        inline const_iterator() : a(Q_NULLPTR), i(0) { }
+        inline const_iterator() : a(nullptr), i(0) { }
         explicit inline const_iterator(const QJsonArray *array, int index) : a(array), i(index) { }
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         inline const_iterator(const const_iterator &o) : a(o.a), i(o.i) {} // ### Qt 6: Removed so class can be trivially-copyable
@@ -242,6 +262,10 @@ private:
     QJsonPrivate::Data *d;
     QJsonPrivate::Array *a;
 };
+
+Q_DECLARE_SHARED_NOT_MOVABLE_UNTIL_QT6(QJsonArray)
+
+Q_CORE_EXPORT uint qHash(const QJsonArray &array, uint seed = 0);
 
 #if !defined(QT_NO_DEBUG_STREAM) && !defined(QT_JSON_READONLY)
 Q_CORE_EXPORT QDebug operator<<(QDebug, const QJsonArray &);

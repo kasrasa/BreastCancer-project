@@ -97,8 +97,13 @@ protected:
 
     friend class QLowEnergyService;
     friend class QLowEnergyControllerPrivate;
+    friend class QLowEnergyControllerPrivateAndroid;
+    friend class QLowEnergyControllerPrivateBluez;
+    friend class QLowEnergyControllerPrivateBluezDBus;
+    friend class QLowEnergyControllerPrivateCommon;
     friend class QLowEnergyControllerPrivateOSX;
-    QLowEnergyCharacteristicPrivate *data;
+    friend class QLowEnergyControllerPrivateWinRT;
+    QLowEnergyCharacteristicPrivate *data = nullptr;
     QLowEnergyCharacteristic(QSharedPointer<QLowEnergyServicePrivate> p,
                              QLowEnergyHandle handle);
 };
@@ -106,5 +111,7 @@ protected:
 Q_DECLARE_OPERATORS_FOR_FLAGS(QLowEnergyCharacteristic::PropertyTypes)
 
 QT_END_NAMESPACE
+
+Q_DECLARE_METATYPE(QLowEnergyCharacteristic)
 
 #endif // QLOWENERGYCHARACTERISTIC_H

@@ -34,7 +34,7 @@ GType gst_gl_memory_pbo_allocator_get_type(void);
 #define GST_IS_GL_MEMORY_PBO_ALLOCATOR_CLASS(klass)      (G_TYPE_CHECK_CLASS_TYPE ((klass), GST_TYPE_GL_MEMORY_PBO_ALLOCATOR))
 #define GST_GL_MEMORY_PBO_ALLOCATOR_GET_CLASS(obj)       (G_TYPE_INSTANCE_GET_CLASS ((obj), GST_TYPE_GL_MEMORY_PBO_ALLOCATOR, GstGLMemoryPBOAllocatorClass))
 #define GST_GL_MEMORY_PBO_ALLOCATOR(obj)                 (G_TYPE_CHECK_INSTANCE_CAST ((obj), GST_TYPE_GL_MEMORY_PBO_ALLOCATOR, GstGLMemoryPBOAllocator))
-#define GST_GL_MEMORY_PBO_ALLOCATOR_CLASS(klass)         (G_TYPE_CHECK_CLASS_CAST ((klass), GST_TYPE_GL_MEMORY_PBO_ALLOCATOR, GstGLAllocatorClass))
+#define GST_GL_MEMORY_PBO_ALLOCATOR_CLASS(klass)         (G_TYPE_CHECK_CLASS_CAST ((klass), GST_TYPE_GL_MEMORY_PBO_ALLOCATOR, GstGLMemoryPBOAllocatorClass))
 #define GST_GL_MEMORY_PBO_ALLOCATOR_CAST(obj)            ((GstGLMemoryPBOAllocator *)(obj))
 
 /**
@@ -44,7 +44,7 @@ GType gst_gl_memory_pbo_allocator_get_type(void);
  */
 struct _GstGLMemoryPBO
 {
-  /* <private> */
+  /*< private >*/
   GstGLMemory      mem;
 
   GstGLBuffer          *pbo;
@@ -80,28 +80,28 @@ gboolean      gst_gl_memory_pbo_copy_into_texture       (GstGLMemoryPBO *gl_mem,
                                                          gboolean respecify);
 
 /**
- * GstGLAllocator
+ * GstGLMemoryPBOAllocator:
  *
- * Opaque #GstGLAllocator struct
+ * Opaque #GstGLMemoryPBOAllocator struct
  */
 struct _GstGLMemoryPBOAllocator
 {
   GstGLMemoryAllocator parent;
 
-  /* <private> */
+  /*< private >*/
   gpointer             _padding[GST_PADDING];
 };
 
 /**
- * GstGLAllocatorClass:
+ * GstGLMemoryPBOAllocatorClass:
  *
- * The #GstGLAllocatorClass only contains private data
+ * Only contains private data
  */
 struct _GstGLMemoryPBOAllocatorClass
 {
   GstGLMemoryAllocatorClass parent_class;
 
-  /* <private> */
+  /*< private >*/
   gpointer                  _padding[GST_PADDING];
 };
 

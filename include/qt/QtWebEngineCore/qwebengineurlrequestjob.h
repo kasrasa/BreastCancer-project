@@ -48,14 +48,14 @@
 
 namespace QtWebEngineCore {
 class URLRequestCustomJobDelegate;
-class URLRequestCustomJobShared;
+class URLRequestCustomJobProxy;
 } // namespace
 
 QT_BEGIN_NAMESPACE
 
 class QIODevice;
 
-class QWEBENGINE_EXPORT QWebEngineUrlRequestJob : public QObject {
+class QWEBENGINECORE_EXPORT QWebEngineUrlRequestJob : public QObject {
     Q_OBJECT
 public:
     ~QWebEngineUrlRequestJob();
@@ -72,6 +72,7 @@ public:
 
     QUrl requestUrl() const;
     QByteArray requestMethod() const;
+    QUrl initiator() const;
 
     void reply(const QByteArray &contentType, QIODevice *device);
     void fail(Error error);
@@ -79,7 +80,7 @@ public:
 
 private:
     QWebEngineUrlRequestJob(QtWebEngineCore::URLRequestCustomJobDelegate *);
-    friend class QtWebEngineCore::URLRequestCustomJobShared;
+    friend class QtWebEngineCore::URLRequestCustomJobProxy;
 
     QtWebEngineCore::URLRequestCustomJobDelegate* d_ptr;
 };

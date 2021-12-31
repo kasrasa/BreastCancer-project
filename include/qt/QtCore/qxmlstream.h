@@ -120,7 +120,7 @@ public:
           reserved(other.reserved),
           m_isDefault(other.m_isDefault)
     {
-        other.reserved = Q_NULLPTR;
+        other.reserved = nullptr;
     }
     QXmlStreamAttribute &operator=(QXmlStreamAttribute &&other) Q_DECL_NOTHROW // = default;
     {
@@ -478,7 +478,7 @@ public:
     void setDevice(QIODevice *device);
     QIODevice *device() const;
 
-#ifndef QT_NO_TEXTCODEC
+#if QT_CONFIG(textcodec)
     void setCodec(QTextCodec *codec);
     void setCodec(const char *codecName);
     QTextCodec *codec() const;

@@ -93,6 +93,23 @@ public:
     QJsonDocument(const QJsonDocument &other);
     QJsonDocument &operator =(const QJsonDocument &other);
 
+    QJsonDocument(QJsonDocument &&other) Q_DECL_NOTHROW
+        : d(other.d)
+    {
+        other.d = nullptr;
+    }
+
+    QJsonDocument &operator =(QJsonDocument &&other) Q_DECL_NOTHROW
+    {
+        swap(other);
+        return *this;
+    }
+
+    void swap(QJsonDocument &other) Q_DECL_NOTHROW
+    {
+        qSwap(d, other.d);
+    }
+
     enum DataValidation {
         Validate,
         BypassValidation
@@ -112,11 +129,9 @@ public:
         Compact
     };
 
-    static QJsonDocument fromJson(const QByteArray &json, QJsonParseError *error = Q_NULLPTR);
+    static QJsonDocument fromJson(const QByteArray &json, QJsonParseError *error = nullptr);
 
-#ifdef Q_QDOC
-    QByteArray toJson(JsonFormat format = Indented) const;
-#elif !defined(QT_JSON_READONLY)
+#if !defined(QT_JSON_READONLY) || defined(Q_CLANG_QDOC)
     QByteArray toJson() const; //### Merge in Qt6
     QByteArray toJson(JsonFormat format) const;
 #endif
@@ -130,6 +145,10 @@ public:
 
     void setObject(const QJsonObject &object);
     void setArray(const QJsonArray &array);
+
+    const QJsonValue operator[](const QString &key) const;
+    const QJsonValue operator[](QLatin1String key) const;
+    const QJsonValue operator[](int i) const;
 
     bool operator==(const QJsonDocument &other) const;
     bool operator!=(const QJsonDocument &other) const { return !(*this == other); }
@@ -146,6 +165,8 @@ private:
 
     QJsonPrivate::Data *d;
 };
+
+Q_DECLARE_SHARED_NOT_MOVABLE_UNTIL_QT6(QJsonDocument)
 
 #if !defined(QT_NO_DEBUG_STREAM) && !defined(QT_JSON_READONLY)
 Q_CORE_EXPORT QDebug operator<<(QDebug, const QJsonDocument &);

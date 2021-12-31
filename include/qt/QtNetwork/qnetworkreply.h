@@ -114,8 +114,8 @@ public:
     ~QNetworkReply();
 
     // reimplemented from QIODevice
-    virtual void close() Q_DECL_OVERRIDE;
-    virtual bool isSequential() const Q_DECL_OVERRIDE;
+    virtual void close() override;
+    virtual bool isSequential() const override;
 
     // like QAbstractSocket:
     qint64 readBufferSize() const;
@@ -143,7 +143,7 @@ public:
     // attributes
     QVariant attribute(QNetworkRequest::Attribute code) const;
 
-#ifndef QT_NO_SSL
+#if QT_CONFIG(ssl)
     QSslConfiguration sslConfiguration() const;
     void setSslConfiguration(const QSslConfiguration &configuration);
     void ignoreSslErrors(const QList<QSslError> &errors);
@@ -157,7 +157,7 @@ Q_SIGNALS:
     void metaDataChanged();
     void finished();
     void error(QNetworkReply::NetworkError);
-#ifndef QT_NO_SSL
+#if QT_CONFIG(ssl)
     void encrypted();
     void sslErrors(const QList<QSslError> &errors);
     void preSharedKeyAuthenticationRequired(QSslPreSharedKeyAuthenticator *authenticator);
@@ -169,9 +169,9 @@ Q_SIGNALS:
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 
 protected:
-    explicit QNetworkReply(QObject *parent = Q_NULLPTR);
+    explicit QNetworkReply(QObject *parent = nullptr);
     QNetworkReply(QNetworkReplyPrivate &dd, QObject *parent);
-    virtual qint64 writeData(const char *data, qint64 len) Q_DECL_OVERRIDE;
+    virtual qint64 writeData(const char *data, qint64 len) override;
 
     void setOperation(QNetworkAccessManager::Operation operation);
     void setRequest(const QNetworkRequest &request);
@@ -182,9 +182,11 @@ protected:
     void setRawHeader(const QByteArray &headerName, const QByteArray &value);
     void setAttribute(QNetworkRequest::Attribute code, const QVariant &value);
 
+#if QT_CONFIG(ssl)
     virtual void sslConfigurationImplementation(QSslConfiguration &) const;
     virtual void setSslConfigurationImplementation(const QSslConfiguration &);
     virtual void ignoreSslErrorsImplementation(const QList<QSslError> &);
+#endif
 
 private:
     Q_DECLARE_PRIVATE(QNetworkReply)

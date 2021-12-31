@@ -76,8 +76,8 @@ CK_CPPSTART
 
 /* check version numbers */
 #define CHECK_MAJOR_VERSION (0)
-#define CHECK_MINOR_VERSION (10)
-#define CHECK_MICRO_VERSION (0)
+#define CHECK_MINOR_VERSION (9)
+#define CHECK_MICRO_VERSION (14)
 CK_DLL_EXP /*extern*/ int CK_EXPORT check_major_version;
 CK_DLL_EXP /*extern*/ int CK_EXPORT check_minor_version;
 CK_DLL_EXP /*extern*/ int CK_EXPORT check_micro_version;
@@ -304,7 +304,7 @@ CK_DLL_EXP void CK_EXPORT _tcase_add_test (TCase * tc, TFun tf,
  *
  * Note that if a setup function fails, the remaining setup functions
  * will be omitted, as will the test case and the teardown functions.
- * If a teardown function fails the remaining teardown functins will be
+ * If a teardown function fails the remaining teardown functions will be
  * omitted.
  *
  * @param tc test case to add unchecked fixture setup/teardown to
@@ -332,7 +332,7 @@ CK_DLL_EXP void CK_EXPORT tcase_add_unchecked_fixture (TCase * tc, SFun setup,
  *
  * Note that if a setup function fails, the remaining setup functions
  * will be omitted, as will the test and the teardown functions. If a
- * teardown function fails the remaining teardown functins will be
+ * teardown function fails the remaining teardown functions will be
  * omitted.
  *
  * @param tc test case to add checked fixture setup/teardown to
@@ -422,20 +422,10 @@ static void __testname (int _i CK_ATTRIBUTE_UNUSED)\
 
 /*
  * This is called whenever an assertion fails.
- * Note that it only has the noreturn modifier when
- * using fork. If fork is unavailable, the function
- * calls longjmp() when a test assertion fails. Marking
- * the function as noreturn causes gcc to make assumptions
- * which are not valid, as longjmp() is like a return.
  */
-#if 1
 CK_DLL_EXP void CK_EXPORT
 _ck_assert_failed (const char *file, int line, const char *expr, ...)
     CK_ATTRIBUTE_NORETURN;
-#else
-CK_DLL_EXP void CK_EXPORT _ck_assert_failed (const char *file, int line,
-    const char *expr, ...);
-#endif
 
 /**
  * Fail the test if expression is false

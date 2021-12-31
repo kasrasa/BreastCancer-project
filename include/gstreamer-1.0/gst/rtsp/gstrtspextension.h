@@ -41,7 +41,7 @@ G_BEGIN_DECLS
   (G_TYPE_INSTANCE_GET_INTERFACE ((inst), GST_TYPE_RTSP_EXTENSION, GstRTSPExtensionInterface))
 
 /**
- * GstRTSPExtension:
+ * GstRTSPExtensionInterface:
  *
  * An interface representing RTSP extensions.
  */
@@ -111,7 +111,7 @@ GstRTSPResult   gst_rtsp_extension_stream_select     (GstRTSPExtension *ext, Gst
 GST_RTSP_API
 GstRTSPResult   gst_rtsp_extension_receive_request   (GstRTSPExtension *ext, GstRTSPMessage *req);
 
-/* signal emision */
+/* signal emission */
 
 GST_RTSP_API
 GstRTSPResult   gst_rtsp_extension_send              (GstRTSPExtension *ext, GstRTSPMessage *req,

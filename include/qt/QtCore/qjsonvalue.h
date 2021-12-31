@@ -82,7 +82,7 @@ public:
     QJsonValue(QLatin1String s);
 #ifndef QT_NO_CAST_FROM_ASCII
     inline QT_ASCII_CAST_WARN QJsonValue(const char *s)
-        : d(Q_NULLPTR), t(String) { stringDataFromQStringHelper(QString::fromUtf8(s)); }
+        : d(nullptr), t(String) { stringDataFromQStringHelper(QString::fromUtf8(s)); }
 #endif
     QJsonValue(const QJsonArray &a);
     QJsonValue(const QJsonObject &o);
@@ -91,6 +91,29 @@ public:
 
     QJsonValue(const QJsonValue &other);
     QJsonValue &operator =(const QJsonValue &other);
+
+    QJsonValue(QJsonValue &&other) Q_DECL_NOTHROW
+        : ui(other.ui),
+          d(other.d),
+          t(other.t)
+    {
+        other.ui = 0;
+        other.d = nullptr;
+        other.t = Null;
+    }
+
+    QJsonValue &operator =(QJsonValue &&other) Q_DECL_NOTHROW
+    {
+        swap(other);
+        return *this;
+    }
+
+    void swap(QJsonValue &other) Q_DECL_NOTHROW
+    {
+        qSwap(ui, other.ui);
+        qSwap(d, other.d);
+        qSwap(t, other.t);
+    }
 
     static QJsonValue fromVariant(const QVariant &variant);
     QVariant toVariant() const;
@@ -114,6 +137,10 @@ public:
     QJsonObject toObject() const;
     QJsonObject toObject(const QJsonObject &defaultValue) const;
 
+    const QJsonValue operator[](const QString &key) const;
+    const QJsonValue operator[](QLatin1String key) const;
+    const QJsonValue operator[](int i) const;
+
     bool operator==(const QJsonValue &other) const;
     bool operator!=(const QJsonValue &other) const;
 
@@ -123,6 +150,7 @@ private:
     friend class QJsonPrivate::Value;
     friend class QJsonArray;
     friend class QJsonObject;
+    friend class QCborValue;
     friend Q_CORE_EXPORT QDebug operator<<(QDebug, const QJsonValue &);
 
     QJsonValue(QJsonPrivate::Data *d, QJsonPrivate::Base *b, const QJsonPrivate::Value& v);
@@ -145,9 +173,9 @@ class Q_CORE_EXPORT QJsonValueRef
 {
 public:
     QJsonValueRef(QJsonArray *array, int idx)
-        : a(array), is_object(false), index(idx) {}
+        : a(array), is_object(false), index(static_cast<uint>(idx)) {}
     QJsonValueRef(QJsonObject *object, int idx)
-        : o(object), is_object(true), index(idx) {}
+        : o(object), is_object(true), index(static_cast<uint>(idx)) {}
 
     inline operator QJsonValue() const { return toValue(); }
     QJsonValueRef &operator = (const QJsonValue &val);
@@ -216,6 +244,10 @@ public:
     QJsonValueRef* operator->() { return &valueRef; }
 };
 #endif
+
+Q_DECLARE_SHARED_NOT_MOVABLE_UNTIL_QT6(QJsonValue)
+
+Q_CORE_EXPORT uint qHash(const QJsonValue &value, uint seed = 0);
 
 #if !defined(QT_NO_DEBUG_STREAM) && !defined(QT_JSON_READONLY)
 Q_CORE_EXPORT QDebug operator<<(QDebug, const QJsonValue &);
