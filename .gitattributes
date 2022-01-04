@@ -1,2 +1,2 @@
 * linguist-vendored
-*.ipynb linguist-detectable=true
+*.ipynb linguist-detectable=True
