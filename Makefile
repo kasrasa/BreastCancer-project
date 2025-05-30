@@ -1,3 +1,6 @@
+install:
+	pip install --upgrade pip
+
 test:
 	poetry run pytest -vv
 
@@ -7,4 +10,4 @@ format:
 lint:
 	pylint --disable=R,C hello.py
 
-all: lint format test
+all: install lint format test
