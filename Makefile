@@ -5,9 +5,9 @@ test:
 	poetry run pytest -vv
 
 format:
-	black *.py
+	poetry run black *.py
 
 lint:
-	pylint --disable=R,C hello.py
+	poetry run pylint --disable=R,C hello.py
 
 all: install lint format test
