@@ -1,6 +1,7 @@
 install:
 	pip install --upgrade pip &&\
-		pip install poetry
+		pip install poetry &&\
+			poetry install --no-root
 
 test:
 	poetry run pytest -vv
