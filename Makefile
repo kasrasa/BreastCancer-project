@@ -1,5 +1,6 @@
 install:
-	pip install --upgrade pip
+	pip install --upgrade pip &&\
+		pip install poetry
 
 test:
 	poetry run pytest -vv
